@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import javax.websocket.server.PathParam;
 
 import org.jboss.logging.Messages;
@@ -72,6 +74,16 @@ public class SocialMediaController {
     @GetMapping("/messages/{messageId}")
     public ResponseEntity<Message> getMessage(@PathVariable Integer messageId ){
         Message result = messageService.getMessage(messageId);
+        if(result != null){
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(200).body(null);
+        }
+    }
+
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getMessage(){
+        List<Message> result = messageService.getAllMessage();
         if(result != null){
             return ResponseEntity.ok(result);
         } else {
