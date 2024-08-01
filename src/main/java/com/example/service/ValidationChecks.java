@@ -37,7 +37,6 @@ public class ValidationChecks {
         String text = message.getMessageText();
         Integer textLength = text.length();
 
-        
 
         if(textLength < 225 && !text.isBlank()){
             passValidation = true;

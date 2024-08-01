@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +33,16 @@ public class MessageService {
             return result;
         } else {
             return null;
-        }
+        }        
+    }
 
-        
+    public Message getMessage(Integer messageId){
+        Optional<Message> fetchMessage = messageRepository.findById(messageId);
+        if(fetchMessage.isPresent()){
+            return fetchMessage.get();
+        } else {
+            return null;
+        }
     }
 
 }
