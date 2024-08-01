@@ -1,12 +1,15 @@
 package com.example.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.entity.Account;
 import com.example.entity.Message;
+import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
 
 @Service
@@ -14,11 +17,14 @@ public class MessageService {
     
     private MessageRepository messageRepository;
     private ValidationChecks validationChecks;
+    private AccountRepository accountRepository;
 
     @Autowired
-    public MessageService(MessageRepository messageRepository, ValidationChecks validationChecks){
+    public MessageService(MessageRepository messageRepository, ValidationChecks validationChecks, AccountRepository accountRepository
+    ){
         this.messageRepository = messageRepository;
         this.validationChecks = validationChecks;
+        this.accountRepository = accountRepository;
     }
 
     public Message createMessage(Message message){
@@ -63,6 +69,26 @@ public class MessageService {
         } else {
             return null;
         }
+    }
+
+    public List<Message> getAllMessageUserMessage(Integer accountId){
+        Optional<Account> fetchAccount = accountRepository.findById(accountId);
+        List<Message> collectUserMessage = new ArrayList<>();
+        if(fetchAccount.isPresent()){
+            List<Message> listOfAllMessages = messageRepository.findAll();
+            for( Message element : listOfAllMessages){
+                Integer getPostById = element.getPostedBy();
+                //Its matching but not adding
+                if(getPostById.equals(accountId)){
+                    collectUserMessage.add(element);
+                } 
+            }
+            return collectUserMessage;
+        } else {
+            return null;
+        }
+            
+        
     }
 
 }
