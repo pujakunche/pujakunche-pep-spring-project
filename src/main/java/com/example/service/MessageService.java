@@ -55,4 +55,14 @@ public class MessageService {
         // }
     }
 
+    public Message deleteMessage(Integer messageId){
+        Optional<Message> fetchMessage = messageRepository.findById(messageId);
+        if(fetchMessage.isPresent()){
+            messageRepository.deleteById(messageId);
+            return fetchMessage.get();
+        } else {
+            return null;
+        }
+    }
+
 }

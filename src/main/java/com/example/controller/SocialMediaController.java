@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 import org.jboss.logging.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -84,6 +85,16 @@ public class SocialMediaController {
     @GetMapping("/messages")
     public ResponseEntity<List<Message>> getMessage(){
         List<Message> result = messageService.getAllMessage();
+        if(result != null){
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(200).body(null);
+        }
+    }
+
+    @DeleteMapping("/messages/{messageId}")
+    public ResponseEntity<Message> deleteMessage(@PathVariable Integer messageId ){
+        Message result = messageService.deleteMessage(messageId);
         if(result != null){
             return ResponseEntity.ok(result);
         } else {
