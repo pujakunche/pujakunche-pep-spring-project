@@ -1,4 +1,9 @@
 package com.example.repository;
 
-public interface MessageRepository {
+import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
+
+import com.example.entity.Message;
+
+public interface MessageRepository extends JpaRepositoryImplementation<Message, Integer>{
+
 }

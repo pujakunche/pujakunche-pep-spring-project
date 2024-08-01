@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.repository.AccountRepository;
 
 @Component
@@ -28,6 +29,24 @@ public class ValidationChecks {
         } else {
             return passesValidation;        
         }
+    }
+
+    public Boolean createMessageValidation(Message message){
+        Boolean passValidation = false;
+
+        String text = message.getMessageText();
+        Integer textLength = text.length();
+
+        
+
+        if(textLength < 225 && !text.isBlank()){
+            passValidation = true;
+            return passValidation;
+        } else {
+            return passValidation;
+        }
+
+
     }
 
   
