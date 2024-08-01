@@ -20,8 +20,7 @@ public class MessageService {
     private AccountRepository accountRepository;
 
     @Autowired
-    public MessageService(MessageRepository messageRepository, ValidationChecks validationChecks, AccountRepository accountRepository
-    ){
+    public MessageService(MessageRepository messageRepository, ValidationChecks validationChecks, AccountRepository accountRepository){
         this.messageRepository = messageRepository;
         this.validationChecks = validationChecks;
         this.accountRepository = accountRepository;
@@ -43,29 +42,27 @@ public class MessageService {
         }        
     }
 
-    public Message updateMessage(Message message, Integer messageId){
-        // Boolean validationResult = validationChecks.createMessageValidation(message);
+    public Message updateMessage(Message message, int messageId){
+        Boolean validationResult = validationChecks.updateMessageValidation(message);
         Optional<Message> fetchMessage = messageRepository.findById(messageId);
         if(fetchMessage.isPresent()){
+            if(validationResult){
 
-            Message updatedMessage = new Message();
-            updatedMessage.setMessageId(messageId);
-            updatedMessage.setMessageText(message.getMessageText());
-            updatedMessage.setPostedBy(fetchMessage.get().getPostedBy());
-            updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
-
-            Message result = messageRepository.save(updatedMessage);
-            return result;
-
+                Message updatedMessage = new Message();
+                updatedMessage.setMessageId(messageId);
+                updatedMessage.setMessageText(message.getMessageText());
+                updatedMessage.setPostedBy(fetchMessage.get().getPostedBy());
+                updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
+    
+                Message result = messageRepository.save(updatedMessage);
+                return result;
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
-        
     }
-
-
-
-
 
     public Message getMessage(Integer messageId){
         Optional<Message> fetchMessage = messageRepository.findById(messageId);

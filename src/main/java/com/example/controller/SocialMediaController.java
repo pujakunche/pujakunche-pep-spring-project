@@ -116,15 +116,16 @@ public class SocialMediaController {
         }
     }
 
-    @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.PATCH)
-    // @PatchMapping("/messages/{messageId}")
-    public ResponseEntity<Message> updateMessage(@RequestBody Message message, @PathVariable Integer messageId){
-            Message result = messageService.updateMessage(message, messageId);
-            if(result != null){
-                return ResponseEntity.ok(result);
-            } else {
-                return ResponseEntity.status(400).body(null);
-            }
+
+        // @PatchMapping("/messages/{messageId}")
+    @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.PUT, produces = "application/json") 
+    public ResponseEntity<Message> updateMessage(@RequestBody Message message, @PathVariable int messageId){
+        Message result = messageService.updateMessage(message, messageId);
+        if(result != null){
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     

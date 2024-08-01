@@ -36,7 +36,7 @@ public class AccountService {
         }
     }
 
-    public Account loginUser(Account account) throws Unauthorized{
+    public Account loginUser(Account account){
         String username = account.getUsername();
         String password = account.getPassword();
         Account userExists = accountRepository.findAccountByUsernameAndPassword(username, password);
@@ -45,7 +45,7 @@ public class AccountService {
         if(userExists != null){
             return userExists;
         } else {
-            throw new IllegalArgumentException();
+            return null;
         }
     }
 

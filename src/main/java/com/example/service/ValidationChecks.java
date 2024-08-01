@@ -44,8 +44,18 @@ public class ValidationChecks {
         } else {
             return passValidation;
         }
+    }
 
-
+    public Boolean updateMessageValidation(Message message){
+        Boolean passValidation = true;
+        int textLength = message.getMessageText().length();
+        // if(textLength > 255){
+        if(passValidation){
+            passValidation = true;
+            return passValidation;
+        } else {
+            return passValidation;
+        }
     }
 
   
