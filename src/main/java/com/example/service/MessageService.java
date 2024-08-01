@@ -43,6 +43,30 @@ public class MessageService {
         }        
     }
 
+    public Message updateMessage(Message message, Integer messageId){
+        // Boolean validationResult = validationChecks.createMessageValidation(message);
+        Optional<Message> fetchMessage = messageRepository.findById(messageId);
+        if(fetchMessage.isPresent()){
+
+            Message updatedMessage = new Message();
+            updatedMessage.setMessageId(messageId);
+            updatedMessage.setMessageText(message.getMessageText());
+            updatedMessage.setPostedBy(fetchMessage.get().getPostedBy());
+            updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
+
+            Message result = messageRepository.save(updatedMessage);
+            return result;
+
+        } else {
+            return null;
+        }
+        
+    }
+
+
+
+
+
     public Message getMessage(Integer messageId){
         Optional<Message> fetchMessage = messageRepository.findById(messageId);
         if(fetchMessage.isPresent()){
