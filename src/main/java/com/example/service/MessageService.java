@@ -42,7 +42,7 @@ public class MessageService {
         }        
     }
 
-    public Message updateMessage(Message message, int messageId){
+    public Message updateMessage(Message message, Integer messageId){
         Boolean validationResult = validationChecks.updateMessageValidation(message);
         Optional<Message> fetchMessage = messageRepository.findById(messageId);
         if(fetchMessage.isPresent()){
@@ -64,6 +64,7 @@ public class MessageService {
         }
     }
 
+
     public Message getMessage(Integer messageId){
         Optional<Message> fetchMessage = messageRepository.findById(messageId);
         if(fetchMessage.isPresent()){
@@ -75,11 +76,7 @@ public class MessageService {
 
     public List<Message> getAllMessage(){
         List<Message> fetchAllMessage = messageRepository.findAll();
-        // if(!fetchAllMessage.isEmpty()){
             return fetchAllMessage;
-        // } else {
-        //     return null;
-        // }
     }
 
     public Message deleteMessage(Integer messageId){
@@ -108,8 +105,6 @@ public class MessageService {
         } else {
             return null;
         }
-            
-        
     }
 
 }

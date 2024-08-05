@@ -117,9 +117,8 @@ public class SocialMediaController {
     }
 
 
-        // @PatchMapping("/messages/{messageId}")
-    @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.PUT, produces = "application/json") 
-    public ResponseEntity<Message> updateMessage(@RequestBody Message message, @PathVariable int messageId){
+    @PatchMapping("/messages/{messageId}")
+    public ResponseEntity<Message> updateMessage(@RequestBody Message message, @PathVariable Integer messageId){
         Message result = messageService.updateMessage(message, messageId);
         if(result != null){
             return ResponseEntity.ok(result);
@@ -127,7 +126,5 @@ public class SocialMediaController {
             return ResponseEntity.status(400).body(null);
         }
     }
-
-    
 
 }

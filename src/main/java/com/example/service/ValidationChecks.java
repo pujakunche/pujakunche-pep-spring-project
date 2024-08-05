@@ -48,10 +48,10 @@ public class ValidationChecks {
 
     public Boolean updateMessageValidation(Message message){
         Boolean passValidation = true;
+        String text = message.getMessageText();
         int textLength = message.getMessageText().length();
-        // if(textLength > 255){
-        if(passValidation){
-            passValidation = true;
+        if(textLength > 225 || text.isBlank()){
+            passValidation = false;
             return passValidation;
         } else {
             return passValidation;
