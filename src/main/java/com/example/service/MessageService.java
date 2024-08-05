@@ -27,19 +27,22 @@ public class MessageService {
     }
 
     public Message createMessage(Message message){
-        Message newMessage = new Message();
-        newMessage.setMessageText(message.getMessageText());
-        newMessage.setPostedBy(message.getPostedBy());
-        newMessage.setTimePostedEpoch(message.getTimePostedEpoch());
-
         Boolean validationResult = validationChecks.createMessageValidation(message);
-
-        if(validationResult){
-            Message result = messageRepository.save(newMessage);
-            return result;
+        Optional<Account> fetchAccount = accountRepository.findById(message.getPostedBy());
+        if(fetchAccount.isPresent()){
+            if(validationResult){
+                Message newMessage = new Message();
+                newMessage.setMessageText(message.getMessageText());
+                newMessage.setPostedBy(message.getPostedBy());
+                newMessage.setTimePostedEpoch(message.getTimePostedEpoch());
+                Message result = messageRepository.save(newMessage);
+                return result;
+            } else {
+                return null;
+            }       
         } else {
             return null;
-        }        
+        }     
     }
 
     public Message updateMessage(Message message, Integer messageId){
