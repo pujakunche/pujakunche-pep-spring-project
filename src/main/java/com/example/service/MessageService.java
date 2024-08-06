@@ -45,16 +45,51 @@ public class MessageService {
         }     
     }
 
-    public Message updateMessage(Message message, Integer messageId){
+    // public Message updateMessage(Message message, Integer messageId){
+    //     Boolean validationResult = validationChecks.updateMessageValidation(message);
+    //     Optional<Message> fetchMessage = messageRepository.findById(messageId);
+    //     if(fetchMessage.isPresent()){
+    //         if(validationResult){
+
+    //             // int temp =  fetchMessage.get().getPostedBy();
+    //             int temp = fetchMessage.get().getPostedBy().intValue();
+
+
+    //             Message updatedMessage = new Message();
+    //             // updatedMessage.setMessageId(fetchMessage.get().getMessageId());
+    //             // updatedMessage.setMessageId(messageId);
+    //             updatedMessage.setMessageText(message.getMessageText());
+    //             // updatedMessage.setPostedBy(4444);
+    //             updatedMessage.setPostedBy(temp);
+    //             updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
+    
+    //             Message result = messageRepository.save(updatedMessage);
+    //             return result;
+    //         } else {
+    //             return null;
+    //         }
+    //     } else {
+    //         return null;
+    //     }
+    // }
+
+    // public Message updateMessage(Message message, int messageId){
+    public Message updateMessage(Message message){
+
         Boolean validationResult = validationChecks.updateMessageValidation(message);
-        Optional<Message> fetchMessage = messageRepository.findById(messageId);
+        Optional<Message> fetchMessage = messageRepository.findById(message.getMessageId());
         if(fetchMessage.isPresent()){
             if(validationResult){
 
+                // int temp =  message.getMessageId();
+                // int temp = message.getMessageId().intValue();
+                // Integer temp = 9999;
+
                 Message updatedMessage = new Message();
-                updatedMessage.setMessageId(messageId);
+                updatedMessage.setMessageId(message.getMessageId());
                 updatedMessage.setMessageText(message.getMessageText());
-                updatedMessage.setPostedBy(fetchMessage.get().getPostedBy());
+                // updatedMessage.setPostedBy(temp);
+                updatedMessage.setPostedBy(message.getMessageId());
                 updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
     
                 Message result = messageRepository.save(updatedMessage);
