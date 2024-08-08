@@ -45,36 +45,9 @@ public class MessageService {
         }     
     }
 
-    // public Message updateMessage(Message message, Integer messageId){
-    //     Boolean validationResult = validationChecks.updateMessageValidation(message);
-    //     Optional<Message> fetchMessage = messageRepository.findById(messageId);
-    //     if(fetchMessage.isPresent()){
-    //         if(validationResult){
+    public Integer updateMessage(Message message){
 
-    //             // int temp =  fetchMessage.get().getPostedBy();
-    //             int temp = fetchMessage.get().getPostedBy().intValue();
-
-
-    //             Message updatedMessage = new Message();
-    //             // updatedMessage.setMessageId(fetchMessage.get().getMessageId());
-    //             // updatedMessage.setMessageId(messageId);
-    //             updatedMessage.setMessageText(message.getMessageText());
-    //             // updatedMessage.setPostedBy(4444);
-    //             updatedMessage.setPostedBy(temp);
-    //             updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
-    
-    //             Message result = messageRepository.save(updatedMessage);
-    //             return result;
-    //         } else {
-    //             return null;
-    //         }
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
-    // public Message updateMessage(Message message, int messageId){
-    public Message updateMessage(Message message){
+        Integer rowsUpdated = 0;
 
         Boolean validationResult = validationChecks.updateMessageValidation(message);
         Optional<Message> fetchMessage = messageRepository.findById(message.getMessageId());
@@ -93,7 +66,10 @@ public class MessageService {
                 updatedMessage.setTimePostedEpoch(message.getTimePostedEpoch());
     
                 Message result = messageRepository.save(updatedMessage);
-                return result;
+                if(result != null){
+                    rowsUpdated = 1;
+                }
+                return rowsUpdated;
             } else {
                 return null;
             }
@@ -101,7 +77,6 @@ public class MessageService {
             return null;
         }
     }
-
 
     public Message getMessage(Integer messageId){
         Optional<Message> fetchMessage = messageRepository.findById(messageId);
@@ -117,11 +92,15 @@ public class MessageService {
             return fetchAllMessage;
     }
 
-    public Message deleteMessage(Integer messageId){
+    public Integer deleteMessage(Integer messageId){
+        Integer rowAffected = 0;
         Optional<Message> fetchMessage = messageRepository.findById(messageId);
         if(fetchMessage.isPresent()){
             messageRepository.deleteById(messageId);
-            return fetchMessage.get();
+            if(fetchMessage.get() != null){
+                rowAffected = 1;
+            }
+            return rowAffected;
         } else {
             return null;
         }

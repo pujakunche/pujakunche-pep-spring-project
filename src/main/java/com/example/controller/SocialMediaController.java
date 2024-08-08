@@ -5,6 +5,7 @@ import java.util.List;
 import javax.websocket.server.PathParam;
 
 import org.jboss.logging.Messages;
+import org.springframework.aop.IntroductionAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -97,8 +98,8 @@ public class SocialMediaController {
     }
 
     @DeleteMapping("/messages/{messageId}")
-    public ResponseEntity<Message> deleteMessage(@PathVariable Integer messageId ){
-        Message result = messageService.deleteMessage(messageId);
+    public ResponseEntity<Integer> deleteMessage(@PathVariable Integer messageId ){
+        Integer result = messageService.deleteMessage(messageId);
         if(result != null){
             return ResponseEntity.ok(result);
         } else {
@@ -117,9 +118,9 @@ public class SocialMediaController {
     }
 
     @PatchMapping("/messages/{messageId}")
-    public ResponseEntity<Message> updateMessage(@RequestBody Message message, @PathVariable Integer messageId){
+    public ResponseEntity<Integer> updateMessage(@RequestBody Message message, @PathVariable Integer messageId){
         message.setMessageId(messageId);
-        Message result = messageService.updateMessage(message);
+        Integer result = messageService.updateMessage(message);
         if(result != null){
             return ResponseEntity.ok(result);
         } else {
